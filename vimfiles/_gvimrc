@@ -1,0 +1,65 @@
+"-------------------------------------------------------------------------------
+" 基本設定 Basics
+"-------------------------------------------------------------------------------
+set nocompatible                 " Vim だ、vi互換なし
+let mapleader = ","              " キーマップリーダー
+set scrolloff=5                  " スクロール時の余白確保
+set textwidth=0                  " 一行に長い文章を書いていても自動折り返しをしない
+set tw=0
+set nobackup                     " バックアップ取らない
+set autoread                     " 他で書き換えられたら自動で読み直す
+set noswapfile                   " スワップファイル作らない
+set hidden                       " 編集中でも他のファイルを開けるようにする
+set backspace=indent,eol,start   " バックスペースでなんでも消せるように
+set formatoptions=lmoq           " テキスト整形オプション，マルチバイト系を追加
+set vb t_vb=                     " ビープをならさない
+set browsedir=buffer             " Exploreの初期ディレクトリ
+set whichwrap=b,s,h,l,<,>,[,]    " カーソルを行頭、行末で止まらないようにする
+set showcmd                      " コマンドをステータス行に表示
+set showmode                     " 現在のモードを表示
+set viminfo='50,<1000,s100,\"50  " viminfoファイルの設定
+set modelines=0                  " モードラインは無効
+
+" ウィンドウの幅と高さ
+set columns=150
+set lines=70
+set cmdheight=1
+winpos 1200 800
+
+" x でヤンクしない
+nnoremap x "_x
+nnoremap X "_X
+
+
+colorscheme bigchu
+
+
+"-------------------------------------------------------------------------------
+" Vundle
+"-------------------------------------------------------------------------------
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+
+
+" Add Plagin
+Plugin 'airblade/vim-gitgutter'
+
+call vundle#end()
+filetype plugin indent on
+
+
+if has('gui_macvim')
+  colorscheme hybrid " カラースキーマを指定文字
+  set transparency=6 " 透明度を指定
+  set showtabline=0  " タブを常に表示
+  set imdisable  " imを無効に
+  set antialias  " アンチエイリアスを有効に
+  set expandtab  " タブを空白文字で
+  set tabstop=4  " タブに使われる空白文字数
+  set shiftwidth=4  " 自動インデントの深さ
+  set guioptions-=t  " ツールバーを非表示に
+  set guifont=source\ code\ pro:h14
+  set lines=100 columns=180 " ウィンドウサイズをセット はみだした部分は自動的に修正させて画面いっぱいに表示させる
+endif
