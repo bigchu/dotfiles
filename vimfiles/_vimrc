@@ -1,8 +1,8 @@
 "-------------------------------------------------------------------------------
 " 基本設定 Basics
 "-------------------------------------------------------------------------------
-set nocompatible                 " Vimっす。vi互換なしっす。
-let mapleader = ","              " キーマップリーダー
+set nocompatible                 " Vim だ、vi互換なし
+" let mapleader = ","              " キーマップリーダー
 set scrolloff=5                  " スクロール時の余白確保
 set textwidth=0                  " 一行に長い文章を書いていても自動折り返しをしない
 set tw=0
@@ -21,10 +21,8 @@ set viminfo='50,<1000,s100,\"50  " viminfoファイルの設定
 set modelines=0                  " モードラインは無効
 
 " ウィンドウの幅と高さ
-set columns=100
-set lines=46
-set cmdheight=1
-" winpos 200 0;
+set columns=150 lines=70 cmdheight=1
+winpos 1200 800
 
 " x でヤンクしない
 nnoremap x "_x
@@ -34,7 +32,6 @@ nnoremap X "_X
 set clipboard+=unnamed
 " ターミナルでマウスを使用できるようにする
 set mouse=a
-" set guioptions+=a
 " set guioptions=C
 set ttymouse=xterm2
 
@@ -48,12 +45,12 @@ command! Ev edit $MYVIMRC
 command! Rv source $MYVIMRC
 
 " pathogenでftdetectなどをloadさせるために一度ファイルタイプ判定をoff
-filetype off
+" filetype off
 " ファイルタイプ判定をon
-filetype plugin on
+" filetype plugin on
 
 " 開業時にコメント入れない
-autocmd FileType * setlocal formatoptions-=ro
+" autocmd FileType * setlocal formatoptions-=ro
 
 
 "-------------------------------------------------------------------------------
@@ -68,7 +65,7 @@ set ruler
 if winwidth(0) >= 120
     set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %F%=[%{GetB()}]\ %l,%c%V%8P
 else
-    set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %f%=[%{GetB()}]\ %l,%c%V%8P
+    set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %F%=[%{GetB()}]\ %l,%c%V%8P
 endif
 
 "入力モード時、ステータスラインのカラーを変更
@@ -105,6 +102,8 @@ func! String2Hex(str)
     endwhile
     return out
 endfunc
+
+
 
 "-------------------------------------------------------------------------------
 " 表示 Apperance
@@ -152,26 +151,26 @@ set smartindent  " 新しい行を開始したときに、新しい行のイン�
 set tabstop=4
 set shiftwidth=4
 set expandtab
-filetype plugin indent on
+" filetype plugin indent on
 
 
 " autocmd BufRead,BufNewFile *.erb set filetype=eruby.html
 
 " 拡張子 php でも html として認識させる
-autocmd FileType php set filetype=html
+" autocmd FileType php set filetype=html
 
 
-if has("autocmd")
+" if has("autocmd")
     "ファイルタイプの検索を有効にする
-    filetype plugin on
+    " filetype plugin on
     "そのファイルタイプにあわせたインデントを利用する
-    filetype indent on
+    " filetype indent on
     " これらのftではインデントを無効に
     " autocmd FileType php filetype indent off
     " autocmd FileType php :set indentexpr=
     " autocmd FileType html :set indentexpr=
     " autocmd FileType xhtml :set indentexpr=
-endif
+" endif
 
 
 "-------------------------------------------------------------------------------
@@ -320,18 +319,13 @@ set virtualedit+=block
 "ビジュアルモード時vで行末まで選択
 vnoremap v $h
 
-" CTRL-hjklでウィンドウ移動
-nnoremap <C-j> ;<C-w>j
-nnoremap <C-k> ;<C-k>j
-nnoremap <C-l> ;<C-l>j
-nnoremap <C-h> ;<C-h>j
-
 
 "-------------------------------------------------------------------------------
 " エンコーディング関連 Encoding
 "-------------------------------------------------------------------------------
 set ffs=unix,dos,mac  " 改行文字
 set encoding=utf-8    " デフォルトエンコーディング
+set fencs=ucs-bom,utf-8,iso-2022-jp,euc-jp,cp932,utf-16le,utf-16,default
 
 
 " 文字コード関連
@@ -448,7 +442,6 @@ hi PmenuSbar ctermbg=0 ctermfg=9
 "-------------------------------------------------------------------------------
 " 編集関連 Edit
 "-------------------------------------------------------------------------------
-
 " insertモードを抜けるとIMEオフ
 set noimdisable
 set iminsert=0 imsearch=0
@@ -543,7 +536,7 @@ let g:treeExplVertical=1
 let NERDSpaceDelims = 1
 
 "<Leader>xでコメントをトグル(NERD_commenter.vim)
-map <Leader>x, c<space>
+" map <Leader>x, c<space>
 ""未対応ファイルタイプのエラーメッセージを表示しない
 let NERDShutUp=1
 
@@ -575,11 +568,11 @@ nnoremap <Space>gp :<C-u>Git push
 "------------------------------------
 " VTreeExplorer
 "------------------------------------
-let g:treeExplVertical=1
+" let g:treeExplVertical=1
 "<Leader>t<Space>でディレクトリツリー表示
-noremap <Leader>t<Space> :VSTreeExplore<CR>
+" noremap <Leader>t<Space> :VSTreeExplore<CR>
 "分割したウィンドウのサイズ
-let g:treeExplWinSize=30
+" let g:treeExplWinSize=30
 
 "------------------------------------
 " DumbBuf.vim
@@ -610,8 +603,8 @@ nnoremap fs :<C-u>OpenBrowserSearch<Space><C-r><C-w><Enter>
 " operator-camelize.vim
 "------------------------------------
 " camel-caseへの変換
-map <Leader>u <Plug>(operator-camelize)
-map <Leader>U <Plug>(operator-decamelize)
+" map <Leader>u <Plug>(operator-camelize)
+" map <Leader>U <Plug>(operator-decamelize)
 
 "------------------------------------
 " operator-replace.vim
@@ -785,44 +778,6 @@ let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 
 
 
-"------------------------------------
-" unite.vim
-"------------------------------------
-" 入力モードで開始する
-let g:unite_enable_start_insert=1
-" バッファ一覧
-" nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
-" ファイル一覧
-" nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
-" レジスタ一覧
-" nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
-" 最近使用したファイル一覧
-" nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
-" 常用セット
-" nnoremap <silent> ,uu :<C-u>Unite buffer file_mru<CR>
-" 全部乗せ
-" nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
-
-nnoremap    [unite]   <Nop>
-nmap    f [unite]
-
-nnoremap [unite]u  :<C-u>Unite<Space>
-nnoremap <silent> [unite]a  :<C-u>UniteWithCurrentDir -buffer-name=files buffer file_mru bookmark file<CR>
-nnoremap <silent> [unite]f  :<C-u>Unite -buffer-name=files file<CR>
-nnoremap <silent> [unite]b  :<C-u>Unite buffer<CR>
-nnoremap <silent> [unite]m  :<C-u>Unite file_mru<CR>
-
-" ウィンドウを分割して開く
-au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
-au FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
-" ウィンドウを縦に分割して開く
-au FileType unite nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('vsplit')
-au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('vsplit')
-" ESCキーを2回押すと終了する
-au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
-au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
-
-
 
 "------------------------------------
 " zen-coding.vim
@@ -940,7 +895,12 @@ au BufNewFile,BufRead *.scss set filetype=scss.css noexpandtab tabstop=4 shiftwi
 " undo
 "------------------------------------
 " set noundofile
-set undodir=.vim/noundofile
+" set undodir=.vim/noundofile
+
+if has('persistent_undo')
+    set undodir=~/Dropbox/private/dev/vim/win/undo
+    set undofile
+endif
 
 
 
@@ -986,4 +946,13 @@ let g:neocomplete#sources#omni#input_patterns.haxe = '\v([\]''"\)]|\w|(^\s*))(\.
 
 " 隠しファイルをデフォルトで表示させる
 let NERDTreeShowHidden = 1
+
+
+
+"------------------------------------
+" add 20200704: python
+"------------------------------------
+set runtimepath+=$VIM
+set pythonthreedll=$VIM/python3/python38.dll
+
 

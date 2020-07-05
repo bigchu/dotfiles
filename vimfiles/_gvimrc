@@ -2,7 +2,7 @@
 " 基本設定 Basics
 "-------------------------------------------------------------------------------
 set nocompatible                 " Vim だ、vi互換なし
-let mapleader = ","              " キーマップリーダー
+" let mapleader = "a"              " キーマップリーダー
 set scrolloff=5                  " スクロール時の余白確保
 set textwidth=0                  " 一行に長い文章を書いていても自動折り返しをしない
 set tw=0
@@ -12,6 +12,7 @@ set noswapfile                   " スワップファイル作らない
 set hidden                       " 編集中でも他のファイルを開けるようにする
 set backspace=indent,eol,start   " バックスペースでなんでも消せるように
 set formatoptions=lmoq           " テキスト整形オプション，マルチバイト系を追加
+set formatoptions+=mMj
 set vb t_vb=                     " ビープをならさない
 set browsedir=buffer             " Exploreの初期ディレクトリ
 set whichwrap=b,s,h,l,<,>,[,]    " カーソルを行頭、行末で止まらないようにする
@@ -19,20 +20,40 @@ set showcmd                      " コマンドをステータス行に表示
 set showmode                     " 現在のモードを表示
 set viminfo='50,<1000,s100,\"50  " viminfoファイルの設定
 set modelines=0                  " モードラインは無効
+set guioptions=C
 
 " ウィンドウの幅と高さ
-set columns=150
-set lines=70
-set cmdheight=1
-winpos 1200 800
+set columns=150 lines=70 cmdheight=1
+winpos 1000 800
 
 " x でヤンクしない
 nnoremap x "_x
 nnoremap X "_X
 
 
-colorscheme bigchu
 
+colorscheme molokai
+
+" set transparency=100 " 透明度を指定
+set encoding=utf-8
+scriptencoding utf-8
+source $VIMRUNTIME/delmenu.vim
+set langmenu=ja_jp.utf-8
+source $VIMRUNTIME/menu.vim
+
+set showtabline=0  " タブを常に表示
+" set imdisable  " imを無効に
+set antialias  " アンチエイリアスを有効に
+set expandtab  " タブを空白文字で
+set tabstop=4  " タブに使われる空白文字数
+set shiftwidth=4  " 自動インデントの深さ
+set guifont=HackGen35:h11:cSHIFTJIS
+" set guifont=Consolas:h13:cSHIFTJIS
+" set guifontwide=MS_Gothic:h13
+" set guifontwide=Ricty:h13
+set renderoptions=type:directx
+set ambiwidth=double
+set display+=lastline "画面最後の行をできる限り表示する。
 
 "-------------------------------------------------------------------------------
 " Vundle
@@ -44,22 +65,76 @@ Plugin 'VundleVim/Vundle.vim'
 
 
 " Add Plagin
+Plugin 'Shougo/denite.nvim.git'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'preservim/nerdcommenter'
+Plugin 'roxma/nvim-yarp'
+" Plugin 'vim-hug-neovim-rpc'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+
+
 
 call vundle#end()
 filetype plugin indent on
 
 
-if has('gui_macvim')
-  colorscheme hybrid " カラースキーマを指定文字
-  set transparency=6 " 透明度を指定
-  set showtabline=0  " タブを常に表示
-  set imdisable  " imを無効に
-  set antialias  " アンチエイリアスを有効に
-  set expandtab  " タブを空白文字で
-  set tabstop=4  " タブに使われる空白文字数
-  set shiftwidth=4  " 自動インデントの深さ
-  set guioptions-=t  " ツールバーを非表示に
-  set guifont=source\ code\ pro:h14
-  set lines=100 columns=180 " ウィンドウサイズをセット はみだした部分は自動的に修正させて画面いっぱいに表示させる
-endif
+
+
+"-------------------------------------------------------------------------------
+" Denite.nvim
+"-------------------------------------------------------------------------------
+" Define mappings
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+  nnoremap <silent><buffer><expr> <CR>
+  \ denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> d
+  \ denite#do_map('do_action', 'delete')
+  nnoremap <silent><buffer><expr> p
+  \ denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> q
+  \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> i
+  \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> <Space>
+  \ denite#do_map('toggle_select').'j'
+endfunction
+
+
+
+"-------------------------------------------------------------------------------
+" NERD Commenter
+"-------------------------------------------------------------------------------
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not
+let g:NERDToggleCheckAllLines = 1
+
+
+
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme='molokai'
+let g:airline_powerline_fonts = 1
+set laststatus=2

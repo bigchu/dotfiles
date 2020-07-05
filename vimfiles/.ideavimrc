@@ -1,0 +1,9 @@
+
+noremap ; :
+noremap : ;
+
+nnoremap x "_x
+nnoremap X "_X
+
+nnoremap fr :action RecentChangedFiles <CR>
+
